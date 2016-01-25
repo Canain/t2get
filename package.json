@@ -1,0 +1,15 @@
+{
+  "name": "t2get",
+  "version": "1.0.0",
+  "description": "Georgia Tech T-Square Automated Crawler",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "Shuyang Chen <sc1085@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "prompt": "^0.2.14",
+    "zombie": "^4.2.1"
+  }
+}
