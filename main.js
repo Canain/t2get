@@ -10,6 +10,8 @@ var args = casper.cli.args;
 var username = args[0];
 var password = args[1];
 
+var mode = args[2];
+
 console.log('Using username: ' + username);
 
 casper.start('https://login.gatech.edu/cas/login?service=https%3A%2F%2Ft-square.gatech.edu%2Fsakai-login-tool%2Fcontainer', function () {
