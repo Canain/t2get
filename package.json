@@ -11,5 +11,14 @@
   "dependencies": {
     "prompt": "^0.2.14",
     "zombie": "^4.2.1"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Canain/t2get.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Canain/t2get/issues"
+  },
+  "homepage": "https://github.com/Canain/t2get#readme"
 }
