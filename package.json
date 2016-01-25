@@ -9,8 +9,6 @@
   "author": "Shuyang Chen <sc1085@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "prompt": "^0.2.14",
-    "zombie": "^4.2.1"
   },
   "devDependencies": {},
   "repository": {
