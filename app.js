@@ -111,6 +111,7 @@ async.waterfall([
 		}, auth);
 	},
 	(ph, page, done) => {
+		page.set('onLoadFinished', null);
 		page.evaluate(getSites, (sites) => {
 			let classes = [];
 			for (let i in sites) {
@@ -120,30 +121,29 @@ async.waterfall([
 			}
 			console.log(classes);
 			async.eachSeries(classes, (site, next) => {
+				console.log(site);
+				let siteUrl = sites[site];
+				console.log(siteUrl);
 				async.waterfall([
 					(step) => {
-						page.open(sites[site], (status) => {
+						page.open(siteUrl, (status) => {
 							step(status == 'success' ? null : status);
 						});
-					},
-					(step) => {
-						page.evaluate(getTools, (tools) => {
-							step(null, tools);
-						});
-					},
-					(tools, step) => {
-						console.log(tools);
-						step();
-					}
+					}//,
+					// (step) => {
+					// 	page.evaluate(getTools, (tools) => {
+					// 		step(null, tools);
+					// 	});
+					// },
+					// (tools, step) => {
+					// 	// console.log(tools);
+					// 	step();
+					// }
 				], (error) => {
-					if (error) {
-						done(error, ph);
-					} else {
-						next();
-					}
+					next(error);
 				});
-			}, () => {
-				done(null, ph);
+			}, (error) => {
+				done(error, ph);
 			});
 		});
 	}
