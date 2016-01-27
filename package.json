@@ -9,8 +9,10 @@
   "author": "Shuyang Chen <sc1085@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "async": "^1.5.2",
     "phantom": "^0.8.4",
-    "phantomjs": "^2.1.2"
+    "phantomjs": "^2.1.2",
+    "prompt": "^0.2.14"
   },
   "devDependencies": {},
   "repository": {

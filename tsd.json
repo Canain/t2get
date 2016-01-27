@@ -13,6 +13,9 @@
     },
     "phantom/phantom.d.ts": {
       "commit": "86dbea8fc37d9473fee465da4f0a21bea4f8cbd9"
+    },
+    "async/async.d.ts": {
+      "commit": "86dbea8fc37d9473fee465da4f0a21bea4f8cbd9"
     }
   }
 }
