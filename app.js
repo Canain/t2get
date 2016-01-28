@@ -81,6 +81,8 @@ function getAssignments() {
 	return assignments;
 }
 
+let phan = null;
+
 async.waterfall([
 	(done) => {
 		prompt.start();
@@ -103,6 +105,7 @@ async.waterfall([
 				'web-security': 'no'
 			}
 		}, (ph) => {
+			phan = ph;
 			done(null, ph, result);
 		})
 	},
@@ -138,6 +141,7 @@ async.waterfall([
 				}
 			}
 			// console.log(classes);
+			let all = {};
 			async.eachSeries(classes, (site, next) => {
 				// console.log(site);
 				let siteUrl = sites[site];
@@ -175,7 +179,8 @@ async.waterfall([
 								},
 								(forward) => {
 									page.evaluate(getAssignments, (assignments) => {
-										console.log(assignments);
+										// console.log(assignments);
+										all[site] = assignments;
 										forward();
 									});
 								}
@@ -190,15 +195,17 @@ async.waterfall([
 					next(error);
 				});
 			}, (error) => {
-				done(error, ph);
+				done(error, all);
 			});
 		});
 	}
-], (error, ph) => {
-	if (ph && ph.exit) {
-		ph.exit();
+], (error, all) => {
+	if (phan) {
+		phan.exit();
 	}
 	if (error) {
 		console.error(error);
+	} else {
+		console.log(all);
 	}
 });
