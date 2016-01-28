@@ -115,11 +115,13 @@ async.waterfall([
 		});
 	},
 	(ph, auth, page, done) => {
+		console.log('Logging in...');
 		page.open(loginUrl, (status) => {
 			done(status == 'success' ? null : status, ph, auth, page);
 		});
 	},
 	(ph, auth, page, done) => {
+		console.log('Logged in');
 		page.set('onLoadFinished', (success) => {
 			done(success == 'success' ? null : success, ph, page);
 		});
@@ -143,7 +145,7 @@ async.waterfall([
 			// console.log(classes);
 			let all = {};
 			async.eachSeries(classes, (site, next) => {
-				// console.log(site);
+				console.log(`Parsing assignments for ${site}`);
 				let siteUrl = sites[site];
 				// console.log(siteUrl);
 				async.waterfall([
@@ -208,6 +210,8 @@ async.waterfall([
 	}
 	
 	let now = Date.now();
+	
+	console.log('Printing assignments...');
 	
 	for (let site in all) {
 		let assignments = all[site];
