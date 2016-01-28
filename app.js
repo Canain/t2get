@@ -204,8 +204,18 @@ async.waterfall([
 		phan.exit();
 	}
 	if (error) {
-		console.error(error);
-	} else {
-		console.log(all);
+		return console.error(error);
+	}
+	
+	let now = Date.now();
+	
+	for (let site in all) {
+		let assignments = all[site];
+		assignments.forEach((assignment) => {
+			let diff = Date.parse(assignment.dueDate) - now;
+			if (diff > 0) {
+				console.log(`${site} ${assignment.title} due in ${diff / (60 * 60 * 1000)} hours`);
+			}
+		});
 	}
 });
