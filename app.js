@@ -121,7 +121,6 @@ async.waterfall([
 		});
 	},
 	(ph, auth, page, done) => {
-		console.log('Logged in');
 		page.set('onLoadFinished', (success) => {
 			done(success == 'success' ? null : success, ph, page);
 		});
@@ -134,6 +133,7 @@ async.waterfall([
 		}, auth);
 	},
 	(ph, page, done) => {
+		console.log('Logged in');
 		page.set('onLoadFinished', null);
 		page.evaluate(getSites, (sites) => {
 			let classes = [];
@@ -209,16 +209,18 @@ async.waterfall([
 		return console.error(error);
 	}
 	
-	let now = Date.now();
+	const now = Date.now();
 	
 	console.log('Printing assignments...');
 	
 	for (let site in all) {
-		let assignments = all[site];
+		const assignments = all[site];
 		assignments.forEach((assignment) => {
-			let diff = Date.parse(assignment.dueDate) - now;
+			const diff = Date.parse(assignment.dueDate) - now;
 			if (diff > 0) {
-				console.log(`${site} ${assignment.title} due in ${diff / (60 * 60 * 1000)} hours`);
+				const days = Math.round(diff / (60 * 60 * 1000 * 24));
+				const hours = Math.round((diff / (60 * 60 * 1000)) % 24);
+				console.log(`${site} ${assignment.title} due in ${days} ${days == 1 ? 'day' : 'days'} and ${hours} ${hours == 1 ? 'hour' : 'hours'}`);
 			}
 		});
 	}
