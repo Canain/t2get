@@ -60,7 +60,25 @@ function getAssignmentIFrameSrc() {
 function getAssignments() {
 	var trs = document.querySelectorAll('.portletBody table tr');
 	
-	return trs ? true : false;
+	var assignments = [];
+	
+	if (trs.length < 2) {
+		return assignments;
+	}
+	
+	for (var i = 1; i < trs.length; i++) {
+		var tr = trs[i];
+		var children = tr.children;
+		var assignment = {};
+		for (var j = 0; j < children.length; j++) {
+			var td = children[j];
+			if (td.headers) {
+				assignment[td.headers] = td.textContent.trim();
+			}
+		}
+		assignments.push(assignment);
+	}
+	return assignments;
 }
 
 async.waterfall([
@@ -119,26 +137,55 @@ async.waterfall([
 					classes.push(i);
 				}
 			}
-			console.log(classes);
+			// console.log(classes);
 			async.eachSeries(classes, (site, next) => {
-				console.log(site);
+				// console.log(site);
 				let siteUrl = sites[site];
-				console.log(siteUrl);
+				// console.log(siteUrl);
 				async.waterfall([
 					(step) => {
 						page.open(siteUrl, (status) => {
 							step(status == 'success' ? null : status);
 						});
-					}//,
-					// (step) => {
-					// 	page.evaluate(getTools, (tools) => {
-					// 		step(null, tools);
-					// 	});
-					// },
-					// (tools, step) => {
-					// 	// console.log(tools);
-					// 	step();
-					// }
+					},
+					(step) => {
+						page.evaluate(getTools, (tools) => {
+							step(null, tools);
+						});
+					},
+					(tools, step) => {
+						// console.log(tools);
+						let assignment = tools['Assignments'];
+						if (assignment) {
+							async.waterfall([
+								(forward) => {
+									page.open(assignment, (status) => {
+										forward(status == 'success' ? null : status);
+									});
+								},
+								(forward) => {
+									page.evaluate(getAssignmentIFrameSrc, (iframe) => {
+										forward(null, iframe);
+									});
+								},
+								(iframe, forward) => {
+									page.open(iframe, (status) => {
+										forward(status == 'success' ? null : status);
+									});
+								},
+								(forward) => {
+									page.evaluate(getAssignments, (assignments) => {
+										console.log(assignments);
+										forward();
+									});
+								}
+							], (error) => {
+								step(error);
+							});
+						} else {
+							step();
+						}
+					}
 				], (error) => {
 					next(error);
 				});
