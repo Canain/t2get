@@ -7,7 +7,8 @@ const phantom = require('phantom');
 const prompt = require('prompt');
 const async = require('async');
 
-const phantomPath = phantomjs.path.substr(0, phantomjs.path.length - 'panthomjs'.length);
+const phantomPathSlashes = phantomjs.path.split(/\/|\\/);
+const phantomPath = phantomjs.path.substr(0, phantomjs.path.length - phantomPathSlashes[phantomPathSlashes.length - 1].length);
 
 const loginUrl = 'https://login.gatech.edu/cas/login?service=https%3A%2F%2Ft-square.gatech.edu%2Fsakai-login-tool%2Fcontainer';
 
@@ -218,8 +219,8 @@ async.waterfall([
 		assignments.forEach((assignment) => {
 			const diff = Date.parse(assignment.dueDate) - now;
 			if (diff > 0) {
-				const days = Math.round(diff / (60 * 60 * 1000 * 24));
-				const hours = Math.round((diff / (60 * 60 * 1000)) % 24);
+				const days = Math.floor(diff / (60 * 60 * 1000 * 24));
+				const hours = Math.floor((diff / (60 * 60 * 1000)) % 24);
 				console.log(`${site} ${assignment.title} due in ${days} ${days == 1 ? 'day' : 'days'} and ${hours} ${hours == 1 ? 'hour' : 'hours'}`);
 			}
 		});
