@@ -106,6 +106,9 @@ async.waterfall([
 			path: phantomPath,
 			parameters: {
 				'web-security': 'no'
+			},
+			dnodeOpts: {
+				weak: false
 			}
 		}, (ph) => {
 			phan = ph;
