@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 /// <reference path="typings/tsd.d.ts" />
 'use strict';
 
