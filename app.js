@@ -4,7 +4,7 @@
 'use strict';
 
 const path = require('path');
-const phantomjs = require('phantomjs');
+const phantomjs = require('phantomjs-prebuilt');
 const phantom = require('phantom');
 const prompt = require('prompt');
 const async = require('async');
