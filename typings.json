@@ -1,0 +1,10 @@
+{
+  "name": "t2get",
+  "ambientDependencies": {
+    "async": "github:DefinitelyTyped/DefinitelyTyped/async/async.d.ts#86dbea8fc37d9473fee465da4f0a21bea4f8cbd9",
+    "minimist": "github:DefinitelyTyped/DefinitelyTyped/minimist/minimist.d.ts#5974b1be295ed7f61ff611459bc06a56cb35fd0c",
+    "node": "github:DefinitelyTyped/DefinitelyTyped/node/node.d.ts#7b3d5a6ea5acda4a81f71309f1cc62354e63b681",
+    "phantom": "github:DefinitelyTyped/DefinitelyTyped/phantom/phantom.d.ts#86dbea8fc37d9473fee465da4f0a21bea4f8cbd9",
+    "phantomjs": "github:DefinitelyTyped/DefinitelyTyped/phantomjs/phantomjs.d.ts#7b3d5a6ea5acda4a81f71309f1cc62354e63b681"
+  }
+}
